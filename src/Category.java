@@ -4,12 +4,13 @@ public class Category {
     private String id;
     private String name;
 
-    private HashSet<String> stuffId;
+    private HashSet<String> bookId;
+    private HashSet<String> thesisId;
 
     public Category(String id, String name) {
         this.id = id;
         this.name = name;
-        stuffId = new HashSet<>();
+        bookId = new HashSet<>();
     }
 
     public String getId() {
@@ -20,7 +21,19 @@ public class Category {
         return name;
     }
 
-    public HashSet<String> getStuffId() {
-        return stuffId;
+    public HashSet<String> getBookId() {
+        return bookId;
+    }
+
+    public HashSet<String> getThesisId() {
+        return thesisId;
+    }
+
+    public void addBookId(String bookId) {
+        this.bookId.add(bookId);
+    }
+
+    public void addThesisId(String thesisId) {
+        this.thesisId.add(thesisId);
     }
 }

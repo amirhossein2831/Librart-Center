@@ -14,6 +14,7 @@ public class Library {
         this.year = year;
         this.numSeat = numSeat;
         this.address = address;
+        books = new HashMap<>();
     }
 
     public String getId() {

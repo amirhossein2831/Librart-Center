@@ -1,4 +1,3 @@
-import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Center {
@@ -11,6 +10,8 @@ public class Center {
         libraries = new HashMap<>();
         categories = new HashMap<>();
         books = new HashMap<>();
+        categories.put("null", new Category("null", "null"));
+
     }
 
     public String addLibrary(Library library) {
@@ -34,10 +35,15 @@ public class Center {
         if (library == null) {
             return "not-found";
         }
+        Category category = categories.get(book.getCategoryId());
+        if (category == null) {
+            return "not-found";
+        }
         if (library.getbook(book.getId()) != null) {
             return "duplicate-id";
         }
         library.addBook(book);
+        category.addBookId(book.getCategoryId());
         return "success";
     }
 }
