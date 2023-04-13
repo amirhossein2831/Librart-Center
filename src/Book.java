@@ -50,4 +50,28 @@ public class Book {
     public String getLibraryId() {
         return libraryId;
     }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setAuthorName(String authorName) {
+        this.authorName = authorName;
+    }
+
+    public void setPublisher(String publisher) {
+        this.publisher = publisher;
+    }
+
+    public void setYear(String year) {
+        this.year = year;
+    }
+
+    public void setNumBook(int numBook) {
+        this.numBook = numBook;
+    }
+
+    public void setCategoryId(String categoryId) {
+        this.categoryId = categoryId;
+    }
 }

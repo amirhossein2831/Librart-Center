@@ -1,4 +1,5 @@
 import java.util.Date;
+import java.util.HashMap;
 
 public class Library {
     private String id;
@@ -6,7 +7,7 @@ public class Library {
     private String year;
     private int numSeat;
     private String address;
-
+    private HashMap<String, Book> books;
     public Library(String id, String name, String year, int numSeat, String address) {
         this.id = id;
         this.name = name;
@@ -33,5 +34,13 @@ public class Library {
 
     public String getAddress() {
         return address;
+    }
+
+    public HashMap<String, Book> getBooks() {
+        return books;
+    }
+
+    public void addBook(Book book) {
+        this.books.put(book.getId(), book);
     }
 }
