@@ -3,15 +3,12 @@ import java.util.HashMap;
 public class Center {
     private HashMap<String, Library> libraries;
     private HashMap<String, Category> categories;
-    private HashMap<String, Book> books;
 
 
     public Center() {
         libraries = new HashMap<>();
         categories = new HashMap<>();
-        books = new HashMap<>();
         categories.put("null", new Category("null", "null"));
-
     }
 
     public String addLibrary(Library library) {
@@ -43,7 +40,19 @@ public class Center {
             return "duplicate-id";
         }
         library.addBook(book);
-        category.addBookId(book.getCategoryId());
+        return "success";
+    }
+
+    public String editBook(Book book) {
+        Library library = libraries.get(book.getLibraryId());
+        if (library == null) {
+            return "not-found";
+        }
+        Book book1 = library.getbook(book.getId());
+        if (book1 == null) {
+            return "not-found";
+        }
+        book1.edit(book);
         return "success";
     }
 }
