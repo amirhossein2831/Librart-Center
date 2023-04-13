@@ -74,4 +74,24 @@ public class Book {
     public void setCategoryId(String categoryId) {
         this.categoryId = categoryId;
     }
+    public void edit(Book book) {
+        if (!book.getName().equals("-")) {
+           setName(book.getName());
+        }
+        if (!book.getAuthorName().equals("-")) {
+            setAuthorName(book.getAuthorName());
+        }
+        if (!book.getPublisher().equals("-")) {
+            setPublisher(book.getPublisher());
+        }
+        if (!book.getYear().equals("-")) {
+            setYear(book.getYear());
+        }
+        if (book.getNumBook() != -1) {
+            setNumBook(book.getNumBook());
+        }
+        if (book.getCategoryId().equals("-")) {
+            setCategoryId(book.getCategoryId());
+        }
+    }
 }
