@@ -4,8 +4,8 @@ import java.util.HashMap;
 public class Center {
     private HashMap<String, Library> libraries;
     private HashMap<String, Category> categories;
-    private HashMap<String, Book> books; public Book() {
-    }
+    private HashMap<String, Book> books;
+
 
     public Center() {
         libraries = new HashMap<>();
@@ -30,10 +30,14 @@ public class Center {
     }
 
     public String addBook(Book book) {
-        if (books.get(book.getId()) != null) {
+        Library library = libraries.get(book.getLibraryId());
+        if (library == null) {
+            return "not-found";
+        }
+        if (library.getbook(book.getId()) != null) {
             return "duplicate-id";
         }
-        books.put(book.getId(), book);
+        library.addBook(book);
         return "success";
     }
 }

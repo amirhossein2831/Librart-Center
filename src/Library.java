@@ -36,11 +36,12 @@ public class Library {
         return address;
     }
 
-    public HashMap<String, Book> getBooks() {
-        return books;
+    public Book getbook(String bookId) {
+        return books.get(bookId);
     }
 
     public void addBook(Book book) {
         this.books.put(book.getId(), book);
     }
+
 }
