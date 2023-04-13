@@ -55,6 +55,9 @@ public class TestParser {
             case "edit-staff":
                 editStaff(args[0], args[1], args[2], args[3], args[4], args[5], args[6]);
                 break;
+            case "remove-staff":
+                removeStaff(args[0]);
+                break;
         }
     }
     public void addLibrary(String id, String name, String year, int numSeat, String address) {
@@ -117,5 +120,9 @@ public class TestParser {
     public void editStaff(String id, String pass, String firstName, String lastName, String notionalId, String year, String address) {
         Staff staff = new Staff(id, pass, firstName, lastName, notionalId, year, address);
         System.out.println(center.editStaff(staff));
+    }
+
+    public void removeStaff(String id) {
+        System.out.println(center.removeStaff(id));
     }
 }
