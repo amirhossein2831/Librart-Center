@@ -15,10 +15,19 @@ public class TestParser {
             case "add-library":
                 addLibrary(args[0],args[1],args[2],Integer.parseInt(args[3]),args[4]);
                 break;
+            case "add-category":
+                addCategory(args[0], args[1]);
+                break;
         }
     }
     public void addLibrary(String id, String name, String year, int numSeat, String address) {
         Library library = new Library(id, name, year, numSeat, address);
         System.out.println(center.addLibrary(library));
+    }
+
+    public void addCategory(String id, String name) {
+        Category category = new Category((id), name);
+        System.out.println(center.addCategory(category));
+
     }
 }
