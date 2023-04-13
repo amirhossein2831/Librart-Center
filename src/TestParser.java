@@ -43,6 +43,10 @@ public class TestParser {
             case "add-student":
                 addStudent(args[0], args[1], args[2], args[3], args[4], args[5], args[6]);
                 break;
+            case "edit-student":
+                editStudent(args[0], args[1], args[2], args[3], args[4], args[5], args[6]);
+                break;
+
         }
     }
     public void addLibrary(String id, String name, String year, int numSeat, String address) {
@@ -72,7 +76,7 @@ public class TestParser {
 
     public void editThesis(String id, String libraryId, String name, String studentName, String advisor, String year, String categoryID) {
         Thesis thesis = new Thesis(id, name, studentName, advisor, year, categoryID, libraryId);
-        System.out.println((center.addThesis(thesis)));
+        System.out.println((center.editThesis(thesis)));
     }
 
     public void removeBook(String bookId, String libraryId) {
@@ -86,6 +90,10 @@ public class TestParser {
     public void addStudent(String id, String pass, String firstName, String lastName, String nationalId, String year, String address) {
         Student student = new Student(id, pass, firstName, lastName, nationalId, year, address);
         System.out.println(center.addStudent(student));
+    }
 
+    public void editStudent(String id, String pass, String firstName, String lastName, String notionalId, String year, String address) {
+        Student student = new Student(id, pass, firstName, lastName, notionalId, year, address);
+        System.out.println(center.editStudent(student));
     }
 }
