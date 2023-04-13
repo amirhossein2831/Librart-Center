@@ -64,4 +64,21 @@ public class Thesis {
     public void setCategoryId(String categoryId) {
         this.categoryId = categoryId;
     }
+    public void edit(Thesis thesis) {
+        if (!thesis.getName().equals("-")) {
+            setName(thesis.getName());
+        }
+        if (!thesis.getStudentName().equals("-")) {
+            setStudentName(thesis.getStudentName());
+        }
+        if (!thesis.getAdvisor().equals("-")) {
+            setAdvisor(thesis.getAdvisor());
+        }
+        if (!thesis.getYear().equals("-")) {
+            setYear(thesis.getYear());
+        }
+        if (!thesis.getCategoryId().equals("-")) {
+            setCategoryId(thesis.getCategoryId());
+        }
+    }
 }
