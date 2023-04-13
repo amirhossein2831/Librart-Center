@@ -53,4 +53,8 @@ public class Library {
     public void addThesis(Thesis thesis) {
         this.theses.put(thesis.getId(), thesis);
     }
+
+    public void removeBook(String id) {
+        books.remove(id);
+    }
 }
