@@ -52,7 +52,7 @@ public class TestParser {
             case "add-staff":
                 addStaff(args[0], args[1], args[2], args[3], args[4], args[5], args[6]);
                 break;
-                
+
         }
     }
     public void addLibrary(String id, String name, String year, int numSeat, String address) {

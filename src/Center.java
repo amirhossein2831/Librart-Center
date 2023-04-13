@@ -4,12 +4,14 @@ public class Center {
     private HashMap<String, Library> libraries;
     private HashMap<String, Category> categories;
     private HashMap<String, Student> students;
+    private HashMap<String, Staff> staffs;
 
 
     public Center() {
         libraries = new HashMap<>();
         categories = new HashMap<>();
         students = new HashMap<>();
+        staffs = new HashMap<>();
         categories.put("null", new Category("null", "null"));
     }
 
@@ -145,6 +147,14 @@ public class Center {
             return "not-found";
         }
         students.remove(id);
+        return "success";
+    }
+
+    public String addStaff(Staff staff) {
+        if (staffs.get(staff.getId()) != null) {
+            return "duplicate-id";
+        }
+        staffs.put(staff.getId(), staff);
         return "success";
     }
 
