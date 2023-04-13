@@ -40,6 +40,9 @@ public class TestParser {
             case "remove-thesis":
                 removeThesis(args[0], args[1]);
                 break;
+            case "add-student":
+                addStudent(args[0], args[1], args[2], args[3], args[4], args[5], args[6]);
+                break;
         }
     }
     public void addLibrary(String id, String name, String year, int numSeat, String address) {
@@ -78,5 +81,11 @@ public class TestParser {
 
     public void removeThesis(String thesisId, String libraryId) {
         System.out.println(center.removeThesis(thesisId, libraryId));
+    }
+
+    public void addStudent(String id, String pass, String firstName, String lastName, String nationalId, String year, String address) {
+        Student student = new Student(id, pass, firstName, lastName, nationalId, year, address);
+        System.out.println(center.addStudent(student));
+
     }
 }
