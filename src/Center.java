@@ -3,11 +3,13 @@ import java.util.HashMap;
 public class Center {
     private HashMap<String, Library> libraries;
     private HashMap<String, Category> categories;
+    private HashMap<String, Student> students;
 
 
     public Center() {
         libraries = new HashMap<>();
         categories = new HashMap<>();
+        students = new HashMap<>();
         categories.put("null", new Category("null", "null"));
     }
 
@@ -116,6 +118,14 @@ public class Center {
             return "not-found";
         }
         library.removeThesis(libraryId);
+        return "success";
+    }
+
+    public String addStudent(Student student) {
+        if (students.get(student.getId()) != null) {
+            return "duplicate-id";
+        }
+        students.put(student.getId(), student);
         return "success";
     }
 }
