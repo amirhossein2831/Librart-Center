@@ -44,4 +44,49 @@ public class Student {
     public String getAddress() {
         return address;
     }
+
+    public void setPass(String pass) {
+        this.pass = pass;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    public void setNationalId(String nationalId) {
+        this.nationalId = nationalId;
+    }
+
+    public void setYear(String year) {
+        this.year = year;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public void edit(Student student) {
+        if (!student.getPass().equals("-")) {
+            setPass(student.getPass());
+        }
+        if (!student.getFirstName().equals("-")) {
+            setFirstName(student.getFirstName());
+        }
+        if (!student.getLastName().equals("-")) {
+            setLastName(student.getLastName());
+        }
+        if (!student.getNationalId().equals("-")) {
+            setNationalId(student.getNationalId());
+        }
+        if (!student.getYear().equals("-")) {
+            setYear(student.getYear());
+        }
+        if (!student.getAddress().equals("-")) {
+            setAddress(student.getAddress());
+        }
+    }
 }
