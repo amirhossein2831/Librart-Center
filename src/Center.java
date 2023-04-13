@@ -36,7 +36,7 @@ public class Center {
         if (category == null) {
             return "not-found";
         }
-        if (library.getbook(book.getId()) != null) {
+        if (library.getBook(book.getId()) != null) {
             return "duplicate-id";
         }
         library.addBook(book);
@@ -48,11 +48,27 @@ public class Center {
         if (library == null) {
             return "not-found";
         }
-        Book book1 = library.getbook(book.getId());
+        Book book1 = library.getBook(book.getId());
         if (book1 == null) {
             return "not-found";
         }
         book1.edit(book);
+        return "success";
+    }
+
+    public String addThesis(Thesis thesis) {
+        Library library = libraries.get(thesis.getLibraryId());
+        if (library == null) {
+            return "not-found";
+        }
+        Category category = categories.get(thesis.getCategoryId());
+        if (category == null) {
+            return "not-found";
+        }
+        if (library.getThesis(thesis.getId()) != null) {
+            return "duplicate-id";
+        }
+        library.addThesis(thesis);
         return "success";
     }
 }
