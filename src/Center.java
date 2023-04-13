@@ -166,5 +166,14 @@ public class Center {
         staff1.edit(staff);
         return "success";
     }
+    //TODO:
+    //this method need another condition to say not-allowed
+    public String removeStaff(String id) {
+        if (staffs.get(id) == null) {
+            return "not-found";
+        }
+        staffs.remove(id);
+        return "success";
+    }
 
 }
