@@ -92,4 +92,18 @@ public class Center {
         thesis1.edit(thesis);
         return "success";
     }
+
+    //TODO:
+    //this method need another condition to say not-allowed
+    public String  removeBook(String bookId, String libraryId) {
+        Library library = libraries.get(libraryId);
+        if (library == null) {
+            return "not-found";
+        }
+        if (library.getBook(bookId) == null) {
+            return "not-found";
+        }
+        library.removeBook(bookId);
+        return "success";
+    }
 }
