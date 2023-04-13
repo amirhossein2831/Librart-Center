@@ -44,5 +44,4 @@ public class Library {
     public void addBook(Book book) {
         this.books.put(book.getId(), book);
     }
-
 }

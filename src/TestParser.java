@@ -21,6 +21,13 @@ public class TestParser {
             case "add-book":
                 addBook(args[0], args[1], args[2], args[3], args[4], Integer.parseInt(args[5]), args[6], args[7]);
                 break;
+            case "edit-book":
+                if (args[6].equals("-")) {
+                    editBook(args[0], args[1], args[2], args[3], args[4], -1,args[6], args[7]);
+                }
+                else
+                    editBook(args[0], args[1], args[2], args[3], args[4], Integer.parseInt(args[5]),args[6], args[7]);
+
         }
     }
     public void addLibrary(String id, String name, String year, int numSeat, String address) {
@@ -36,6 +43,10 @@ public class TestParser {
     public void addBook(String id, String name, String authorName, String publisher, String year, int numBook, String categoryId, String libraryId) {
         Book book = new Book(id, name, authorName, publisher, year, numBook, categoryId, libraryId);
         System.out.println(center.addBook(book));
+    }
 
+    public void editBook(String id, String name, String authorName, String publisher, String year, int numBook, String categoryId,String libraryId) {
+        Book book = new Book(id, name, authorName, publisher, year, numBook, categoryId, libraryId);
+        System.out.println(center.editBook(book));
     }
 }
