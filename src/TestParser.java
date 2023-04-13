@@ -27,6 +27,8 @@ public class TestParser {
                 }
                 else
                     editBook(args[0], args[1], args[2], args[3], args[4], Integer.parseInt(args[5]),args[6], args[7]);
+                break;
+            case "add-thesis":
 
         }
     }
@@ -48,5 +50,10 @@ public class TestParser {
     public void editBook(String id, String name, String authorName, String publisher, String year, int numBook, String categoryId,String libraryId) {
         Book book = new Book(id, name, authorName, publisher, year, numBook, categoryId, libraryId);
         System.out.println(center.editBook(book));
+    }
+
+    public void addThesis(String id, String name, String studentName, String advisor, String year, String categoryId, String libraryId) {
+        Thesis thesis = new Thesis(id, name, studentName, advisor, year, categoryId, libraryId);
+        System.out.println(center.addThesis(thesis));
     }
 }
