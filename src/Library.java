@@ -8,6 +8,7 @@ public class Library {
     private int numSeat;
     private String address;
     private HashMap<String, Book> books;
+    private HashMap<String, Thesis> theses;
     public Library(String id, String name, String year, int numSeat, String address) {
         this.id = id;
         this.name = name;
@@ -15,6 +16,7 @@ public class Library {
         this.numSeat = numSeat;
         this.address = address;
         books = new HashMap<>();
+        theses = new HashMap<>();
     }
 
     public String getId() {
@@ -37,11 +39,18 @@ public class Library {
         return address;
     }
 
-    public Book getbook(String bookId) {
+    public Book getBook(String bookId) {
         return books.get(bookId);
     }
 
     public void addBook(Book book) {
         this.books.put(book.getId(), book);
+    }
+
+    public Thesis getThesis(String thesisId) {
+        return theses.get(thesisId);
+    }
+    public void addThesis(Thesis thesis) {
+        this.theses.put(thesis.getId(), thesis);
     }
 }
