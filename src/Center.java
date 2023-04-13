@@ -106,4 +106,16 @@ public class Center {
         library.removeBook(bookId);
         return "success";
     }
+
+    public String removeThesis(String thesisId, String libraryId) {
+        Library library = libraries.get(libraryId);
+        if (library == null) {
+            return "not-found";
+        }
+        if (library.getThesis(thesisId) == null) {
+            return "not-found";
+        }
+        library.removeThesis(libraryId);
+        return "success";
+    }
 }
