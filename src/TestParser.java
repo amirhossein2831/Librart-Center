@@ -37,6 +37,9 @@ public class TestParser {
             case "remove-book":
                 removeBook(args[0], args[1]);
                 break;
+            case "remove-thesis":
+                removeThesis(args[0], args[1]);
+                break;
         }
     }
     public void addLibrary(String id, String name, String year, int numSeat, String address) {
@@ -71,5 +74,9 @@ public class TestParser {
 
     public void removeBook(String bookId, String libraryId) {
         System.out.println(center.removeBook(bookId, libraryId));
+    }
+
+    public void removeThesis(String thesisId, String libraryId) {
+        System.out.println(center.removeThesis(thesisId, libraryId));
     }
 }
