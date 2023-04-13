@@ -108,7 +108,8 @@ public class Center {
         library.removeBook(bookId);
         return "success";
     }
-
+    //TODO:
+    //this method need another condition to say not-allowed
     public String removeThesis(String thesisId, String libraryId) {
         Library library = libraries.get(libraryId);
         if (library == null) {
@@ -137,4 +138,14 @@ public class Center {
         student1.edit(student);
         return "success";
     }
+    //TODO:
+    //this method need another condition to say not-allowed
+    public String removeStudent(String id) {
+        if (students.get(id) == null) {
+            return "not-found";
+        }
+        students.remove(id);
+        return "success";
+    }
+
 }
