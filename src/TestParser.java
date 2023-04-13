@@ -23,13 +23,17 @@ public class TestParser {
                 break;
             case "edit-book":
                 if (args[6].equals("-")) {
-                    editBook(args[0], args[1], args[2], args[3], args[4], -1,args[6], args[7]);
+                    editBook(args[0], args[1], args[2], args[3], args[4],args[5],-1, args[7]);
                 }
                 else
-                    editBook(args[0], args[1], args[2], args[3], args[4], Integer.parseInt(args[5]),args[6], args[7]);
+                    editBook(args[0], args[1], args[2], args[3], args[4],args[5], Integer.parseInt(args[6]), args[7]);
                 break;
             case "add-thesis":
                     addThesis(args[0], args[1], args[2], args[3], args[4],args[5],args[6]);
+                break;
+            case "edit-thesis":
+                editThesis(args[0], args[1], args[2], args[3], args[4], args[5], args[6]);
+                break;
         }
     }
     public void addLibrary(String id, String name, String year, int numSeat, String address) {
@@ -47,7 +51,7 @@ public class TestParser {
         System.out.println(center.addBook(book));
     }
 
-    public void editBook(String id, String name, String authorName, String publisher, String year, int numBook, String categoryId,String libraryId) {
+    public void editBook(String id,String libraryId ,String name, String authorName, String publisher, String year, int numBook, String categoryId) {
         Book book = new Book(id, name, authorName, publisher, year, numBook, categoryId, libraryId);
         System.out.println(center.editBook(book));
     }
@@ -55,5 +59,10 @@ public class TestParser {
     public void addThesis(String id, String name, String studentName, String advisor, String year, String categoryId, String libraryId) {
         Thesis thesis = new Thesis(id, name, studentName, advisor, year, categoryId, libraryId);
         System.out.println(center.addThesis(thesis));
+    }
+
+    public void editThesis(String id, String libraryId, String name, String studentName, String advisor, String year, String categoryID) {
+        Thesis thesis = new Thesis(id, name, studentName, advisor, year, categoryID, libraryId);
+        System.out.println((center.addThesis(thesis)));
     }
 }
