@@ -158,4 +158,13 @@ public class Center {
         return "success";
     }
 
+    public String editStaff(Staff staff) {
+        Staff staff1 = staffs.get(staff.getId());
+        if (staff1 == null) {
+            return "not-found";
+        }
+        staff1.edit(staff);
+        return "success";
+    }
+
 }
