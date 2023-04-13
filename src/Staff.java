@@ -68,4 +68,25 @@ public class Staff {
     public void setAddress(String address) {
         this.address = address;
     }
+
+    public void edit(Staff staff) {
+        if (!staff.getPass().equals("-")) {
+            setPass(staff.getPass());
+        }
+        if (!staff.getFirstName().equals("-")) {
+            setFirstName(staff.getFirstName());
+        }
+        if (!staff.getLastName().equals("-")) {
+            setLastName(staff.getLastName());
+        }
+        if (!staff.getNationalId().equals("-")) {
+            setNationalId(staff.getNationalId());
+        }
+        if (!staff.getYear().equals("-")) {
+            setYear(staff.getYear());
+        }
+        if (!staff.getAddress().equals("-")) {
+            setAddress(staff.getAddress());
+        }
+    }
 }
