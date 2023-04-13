@@ -128,4 +128,13 @@ public class Center {
         students.put(student.getId(), student);
         return "success";
     }
+
+    public String editStudent(Student student) {
+        Student student1 = students.get(student.getId());
+        if (student1 == null) {
+            return "not-found";
+        }
+        student1.edit(student);
+        return "success";
+    }
 }
