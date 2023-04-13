@@ -57,4 +57,8 @@ public class Library {
     public void removeBook(String id) {
         books.remove(id);
     }
+
+    public void removeThesis(String id) {
+        theses.remove(id);
+    }
 }
