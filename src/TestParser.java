@@ -1,3 +1,7 @@
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 public class TestParser {
     private Center center;
 
@@ -5,7 +9,7 @@ public class TestParser {
         center = new Center();
     }
 
-    public void parseCommand(String input) {
+    public void parseCommand(String input) throws ParseException {
         String[] command = input.split("#");
         String[] args = new String[]{};
         if (command.length > 1) {
@@ -58,6 +62,8 @@ public class TestParser {
             case "remove-staff":
                 removeStaff(args[0]);
                 break;
+            case "borrow":
+                borrow(args[0], args[1], args[2], args[3], args[4], args[5]);
         }
     }
     public void addLibrary(String id, String name, String year, int numSeat, String address) {
@@ -124,5 +130,11 @@ public class TestParser {
 
     public void removeStaff(String id) {
         System.out.println(center.removeStaff(id));
+    }
+
+    public void borrow(String userId, String pass, String libraryId, String stuffId, String strDate, String hour) throws ParseException {
+        Date date = new SimpleDateFormat("yyyy-MM-dd hh:mm").parse(strDate + " " + hour);
+        Borrow borrow = new Borrow(date, userId, stuffId, libraryId);
+        System.out.println(center.borrow(borrow));
     }
 }
