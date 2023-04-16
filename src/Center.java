@@ -3,10 +3,10 @@ import java.util.HashMap;
 import java.util.HashSet;
 
 public class Center {
-    private HashMap<String, Library> libraries;
-    private HashMap<String, Category> categories;
-    private HashMap<String, Student> students;
-    private HashMap<String, Staff> staffs;
+    private final HashMap<String, Library> libraries;
+    private final HashMap<String, Category> categories;
+    private final HashMap<String, Student> students;
+    private final HashMap<String, Staff> staffs;
 
 
     public Center() {
@@ -15,6 +15,10 @@ public class Center {
         students = new HashMap<>();
         staffs = new HashMap<>();
         categories.put("null", new Category("null", "null"));
+    }
+
+    public Library getLibrary(String libraryId) {
+        return libraries.get(libraryId);
     }
 
     public String addLibrary(Library library) {
@@ -101,7 +105,7 @@ public class Center {
 
     //TODO:
     //this method need another condition to say not-allowed
-    public String  removeBook(String bookId, String libraryId) {
+    public String removeBook(String bookId, String libraryId) {
         Library library = libraries.get(libraryId);
         if (library == null) {
             return "not-found";
@@ -115,6 +119,7 @@ public class Center {
         library.removeBook(bookId);
         return "success";
     }
+
     //TODO:
     //this method need another condition to say not-allowed
     public String removeThesis(String thesisId, String libraryId) {
@@ -148,16 +153,21 @@ public class Center {
         student1.edit(student);
         return "success";
     }
+
     //TODO:
     //this method need another condition to say not-allowed
     public String removeStudent(String id) {
-        if (students.get(id) == null) {
+        Student student = students.get(id);
+        if (student == null) {
             return "not-found";
         }
         for (Library library : new ArrayList<>(libraries.values())) {
-            if (library.checkUserBorrows(id)) {
+            if (library.checkUserBorrows(id) != null) {
                 return "not-allowed";
             }
+        }
+        if (student.getDebt() != 0) {
+            return "not-allowed";
         }
         students.remove(id);
         return "success";
@@ -179,14 +189,19 @@ public class Center {
         staff1.edit(staff);
         return "success";
     }
+
     //TODO:
     //this method need another condition to say not-allowed
     public String removeStaff(String id) {
-        if (staffs.get(id) == null) {
+        Staff staff = staffs.get(id);
+        if (staff ==  null) {
             return "not-found";
         }
+        if (staff.getDebt() != 0) {
+            return "not-allowed";
+        }
         for (Library library : new ArrayList<>(libraries.values())) {
-            if (library.checkUserBorrows(id)) {
+            if (library.checkUserBorrows(id) != null) {
                 return "not-allowed";
             }
         }
@@ -194,9 +209,8 @@ public class Center {
         return "success";
     }
 
-    public String borrow(Borrow borrow,String pass) {
+    public String borrow(Borrow borrow, String pass) {
         if (!borrow.evaluateIsStudent(new HashSet<>(students.keySet()), new HashSet<>(staffs.keySet()))) {
-            System.out.println("1");
             return "not-found";
         }
         if (borrow.isStudent()) {
@@ -212,13 +226,9 @@ public class Center {
         }
         Library library = libraries.get(borrow.getLibraryId());
         if (library == null) {
-            System.out.println("2");
-
             return "not-found";
         }
         if (!borrow.evaluateIsBook(library.getBookIds(), library.getThesisIds())) {
-            System.out.println("3");
-
             return "not-found";
         }
         if (!library.borrow(borrow)) {
@@ -226,7 +236,44 @@ public class Center {
         }
         return "success";
     }
-    public Library getLibrary(String libraryId) {
-        return libraries.get(libraryId);
+
+    public String returning(Borrow borrow, String pass) {
+        if (!borrow.evaluateIsStudent(new HashSet<>(students.keySet()), new HashSet<>(staffs.keySet()))) {
+            return "not-found";
+        }
+        if (borrow.isStudent()) {
+            Student student = students.get(borrow.getUserId());
+            if (!student.getPass().equals(pass)) {
+                return "invalid-pass";
+            }
+
+        } else {
+            Staff staff = staffs.get(borrow.getUserId());
+            if (!staff.getPass().equals(pass)) {
+                return "invalid-pass";
+            }
+        }
+        Library library = libraries.get(borrow.getLibraryId());
+        if (library == null) {
+            return "not-found";
+        }
+        if (!borrow.evaluateIsBook(library.getBookIds(), library.getThesisIds())) {
+            return "not-found";
+        }
+        Borrow borrowHelp = library.checkUserBorrows(borrow.getUserId(),borrow.getStuffId());
+        if (borrowHelp== null) {
+            return "not-found";
+        }
+        int debt = library.returning(borrowHelp,borrow.getDate());
+        if (debt == 0) {
+            return "success";
+        }
+        if (borrow.isStudent()) {
+            students.get(borrow.getUserId()).setDebt(debt);
+            return ""+debt;
+        }
+        staffs.get(borrow.getUserId()).setDebt(debt);
+        return ""+debt;
     }
 }
+
