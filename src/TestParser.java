@@ -5,6 +5,7 @@ import java.util.Date;
 public class TestParser {
     private Center center;
 
+
     public TestParser() {
         center = new Center();
     }
@@ -67,6 +68,9 @@ public class TestParser {
                 break;
             case "return":
                 returning(args[0], args[1], args[2], args[3], args[4], args[5]);
+                break;
+            case "search":
+                search(args[0]);
                 break;
             case "report-penalties-sum":
                 reportPenalties();
@@ -149,6 +153,10 @@ public class TestParser {
         Date date = new SimpleDateFormat("yyyy-MM-dd hh:mm").parse(strDate + " " + hour);
         Borrow borrow = new Borrow(date, userId, stuffId, libraryId);
         System.out.println(center.returning(borrow,pass));
+    }
+
+    public void search(String key) {
+        System.out.println(center.search(key));
     }
 
     public void reportPenalties() {
