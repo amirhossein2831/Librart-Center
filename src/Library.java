@@ -1,7 +1,4 @@
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.HashSet;
+import java.util.*;
 
 public class Library {
     private final String id;
@@ -208,6 +205,40 @@ public class Library {
             }
         }
         return 0;
+    }
+
+    public StringBuilder  search(String key) {
+        HashSet<String > output = new HashSet<>();
+        StringBuilder searchID = new StringBuilder();
+        for (Book book : books.values()) {
+            if (book.getName().toLowerCase().contains(key.toLowerCase())) {
+                output.add(book.getId());
+            }
+            if (book.getAuthorName().toLowerCase().contains(key.toLowerCase())) {
+                output.add(book.getId());
+            }
+            if (book.getPublisher().toLowerCase().contains(key.toLowerCase())) {
+                output.add(book.getId());
+            }
+        }
+        for (Thesis thesis : theses.values()) {
+            if (thesis.getName().toLowerCase().contains(key.toLowerCase())) {
+                output.add(thesis.getId());
+            }
+            if (thesis.getStudentName().toLowerCase().contains(key.toLowerCase())) {
+                output.add(thesis.getId());
+            }
+            if (thesis.getAdvisor().toLowerCase().contains(key.toLowerCase())) {
+                output.add(thesis.getId());
+            }
+        }
+        ArrayList<String> outputArray = new ArrayList<>(output);
+        Collections.sort(outputArray);
+        for (String i : outputArray) {
+            searchID.append(i);
+            searchID.append("|");
+        }
+        return searchID;
     }
 }
 
