@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 
@@ -132,15 +133,49 @@ public class Library {
         }
         return false;
     }
-    public boolean checkUserBorrows(String userId) {
+    public Borrow checkUserBorrows(String userId) {
+        Borrow borr = null;
         for (ArrayList<Borrow> borrows1 : new ArrayList<>(borrows.values())) {
             for (Borrow borrow : borrows1) {
                 if (borrow.getUserId().equals(userId)) {
-                    return true;
+                    if (borr == null) {
+                        borr = borrow;
+                    } else if (borr.getDate().getTime() < borrow.getDate().getTime()) {
+                        borr = borrow;
+                    }
+                    return borrow;
                 }
             }
         }
-        return false;
+        return null;
+    }
+
+    public int checkDebt(Borrow borrow, Date returnTime) {
+        long firstMin = borrow.getDate().getTime() / 3600000;
+        long secondMin =  returnTime.getTime() / 3600000;
+        long periodTime = secondMin - firstMin;
+        if (borrow.isStudent()) {
+            if (borrow.isBook()) {
+                if (periodTime < (10 * 24)) {
+                    return 0;
+                }
+                return (int) ((periodTime - (10 * 24)) * 50);
+            }
+            if (periodTime < (7 * 24)) {
+                return 0;
+            }
+            return (int) ((periodTime - (7 * 24)) * 50);
+        }
+        if (borrow.isBook()) {
+            if (periodTime < (14 * 24)) {
+                return 0;
+            }
+            return (int) ((periodTime - (14 * 24)) * 100);
+        }
+        if (periodTime < (10 * 24)) {
+            return 0;
+        }
+        return (int) ((periodTime - (10 * 24)) * 100);
     }
 }
 
