@@ -345,6 +345,7 @@ public class Center {
         if (searchID.length() == 0) {
             return new StringBuilder("not-found");
         }
+        searchID.deleteCharAt(searchID.length() - 1);
         return searchID;
     }
 
