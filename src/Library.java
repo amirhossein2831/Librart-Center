@@ -1,3 +1,4 @@
+import java.awt.*;
 import java.util.*;
 
 public class Library {
@@ -239,6 +240,22 @@ public class Library {
             searchID.append("|");
         }
         return searchID;
+    }
+
+    public Point categoryReport(String categoryId) {
+        int bookNum = 0;
+        int thesisNum = 0;
+        for (Book book : books.values()) {
+            if (book.getCategoryId().equals(categoryId)) {
+                bookNum++;
+            }
+        }
+        for (Thesis thesis : theses.values()) {
+            if (thesis.getCategoryId().equals(categoryId)) {
+                thesisNum++;
+            }
+        }
+        return new Point(bookNum, thesisNum);
     }
 }
 
