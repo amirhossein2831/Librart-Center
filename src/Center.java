@@ -365,6 +365,14 @@ public class Center {
         return output.x + " " + output.y;
     }
 
+    public String libraryReport(String libraryId) {
+        Library library = libraries.get(libraryId);
+        if (library == null) {
+            return "not-found";
+        }
+        return library.libraryReport();
+    }
+
 
 }
 
