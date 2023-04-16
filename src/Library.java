@@ -143,11 +143,24 @@ public class Library {
                     } else if (borr.getDate().getTime() < borrow.getDate().getTime()) {
                         borr = borrow;
                     }
-                    return borrow;
                 }
             }
         }
-        return null;
+        return borr;
+    }
+    public Borrow checkUserBorrows(String userId,String stuffId) {
+        Borrow borr = null;
+        ArrayList<Borrow> hold = borrows.get(stuffId);
+            for (Borrow borrow : hold) {
+                if (borrow.getUserId().equals(userId)) {
+                    if (borr == null) {
+                        borr = borrow;
+                    } else if (borr.getDate().getTime() < borrow.getDate().getTime()) {
+                        borr = borrow;
+                    }
+                }
+            }
+        return borr;
     }
 
     public int checkDebt(Borrow borrow, Date returnTime) {
@@ -176,6 +189,25 @@ public class Library {
             return 0;
         }
         return (int) ((periodTime - (10 * 24)) * 100);
+    }
+
+    public int returning(Borrow borrow, Date returnTime) {
+        ArrayList<Borrow> borrows1 = borrows.get(borrow.getStuffId());
+        if (checkDebt(borrow, returnTime) == 0) {
+            for (int i = 0; i < borrows1.size(); i++) {
+                if (borrows1.get(i).getDate().equals(borrow.getDate())  ) {
+                    borrows1.remove(i);
+                    return 0;
+                }
+            }
+        }
+        for (int i = 0; i < borrows1.size(); i++) {
+            if (borrows1.get(i).getDate().equals(borrow.getDate())) {
+                borrows1.remove(i);
+                return checkDebt(borrow, returnTime);
+            }
+        }
+        return 0;
     }
 }
 
