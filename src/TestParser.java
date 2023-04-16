@@ -72,6 +72,9 @@ public class TestParser {
             case "search":
                 search(args[0]);
                 break;
+            case "search-user":
+                searchUser(args[0], args[1], args[2]);
+                break;
             case "report-penalties-sum":
                 reportPenalties();
                 break;
@@ -159,6 +162,9 @@ public class TestParser {
         System.out.println(center.search(key));
     }
 
+    public void searchUser(String userId, String pass, String key) {
+        System.out.println(center.searchUser(userId, pass, key));
+    }
     public void reportPenalties() {
         System.out.println(center.reportPenalties());
     }
