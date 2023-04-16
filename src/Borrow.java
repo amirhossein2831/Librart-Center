@@ -19,19 +19,25 @@ public class Borrow {
         this.stuffId = stuffId;
     }
 
-    public void evaluateIsStudent(HashSet<String> userIds) {
-        if (userIds.contains(userId)) {
+    public boolean evaluateIsStudent(HashSet<String> studentIds, HashSet<String> staffIds) {
+        if (studentIds.contains(userId)) {
             this.isStudent = true;
-            return;
+            return true;
+        } else if (staffIds.contains(userId)) {
+            this.isStudent = false;
+            return true;
         }
-        this.isStudent = false;
+        return false;
     }
-    public void evaluateIsBook(HashSet<String> stuffIds) {
-        if (stuffIds.contains(stuffId)) {
+    public boolean evaluateIsBook(HashSet<String> bookIds,HashSet<String> thesisIds) {
+        if (bookIds.contains(stuffId)) {
             this.isBook = true;
-            return;
+            return true;
+        } else if (thesisIds.contains(stuffId)) {
+            this.isBook = false;
+            return true;
         }
-        this.isBook = false;
+        return false;
     }
 
     public Date getDate() {
