@@ -285,7 +285,19 @@ public class Center {
             Penalties += student.getDebt();
         }
         return "" + Penalties;
-
     }
+
+    public StringBuilder search(String key) {
+        StringBuilder output = new StringBuilder();
+        for (Library library : libraries.values()) {
+            output.append(library.search(key));
+        }
+        if (output.length() == 0) {
+            return output.append("not-found");
+        }
+        output.deleteCharAt(output.length() - 1);
+        return output;
+    }
+
 }
 
