@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 
@@ -298,6 +299,55 @@ public class Center {
         output.deleteCharAt(output.length() - 1);
         return output;
     }
+
+    public StringBuilder searchUser(String userId, String pass, String key) {
+        Student student = students.get(userId);
+        Staff staff = staffs.get(userId);
+        if (staff == null && student == null) {
+            return new StringBuilder("not-found");
+        } else if (staff == null) {
+            if (!student.getPass().equals(pass)) {
+                return new StringBuilder("invalid-pass");
+            }
+        } else if (student == null) {
+            if (!staff.getPass().equals(pass)) {
+                return new StringBuilder("invalid-pass");
+            }
+        }
+        return searchUser(key);
+    }
+
+    private StringBuilder searchUser(String key) {
+        HashSet<String> output = new HashSet<>();
+        StringBuilder searchID = new StringBuilder();
+        for (Student student : students.values()) {
+            if (student.getFirstName().toLowerCase().contains(key.toLowerCase())) {
+                output.add(student.getId());
+            }
+            if (student.getLastName().toLowerCase().contains(key.toLowerCase())) {
+                output.add(student.getId());
+            }
+        }
+        for (Staff staff : staffs.values()) {
+            if (staff.getFirstName().toLowerCase().contains(key.toLowerCase())) {
+                output.add(staff.getId());
+            }
+            if (staff.getLastName().toLowerCase().contains(key.toLowerCase())) {
+                output.add(staff.getId());
+            }
+        }
+        ArrayList<String> outputArray = new ArrayList<>(output);
+        Collections.sort(outputArray);
+        for (String i : outputArray) {
+            searchID.append(i);
+            searchID.append("|");
+        }
+        if (searchID.length() == 0) {
+            return new StringBuilder("not-found");
+        }
+        return searchID;
+    }
+
 
 }
 
