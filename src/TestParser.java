@@ -64,6 +64,10 @@ public class TestParser {
                 break;
             case "borrow":
                 borrow(args[0], args[1], args[2], args[3], args[4], args[5]);
+                break;
+            case "return":
+                returning(args[0], args[1], args[2], args[3], args[4], args[5]);
+                break;
         }
     }
     public void addLibrary(String id, String name, String year, int numSeat, String address) {
@@ -136,5 +140,10 @@ public class TestParser {
         Date date = new SimpleDateFormat("yyyy-MM-dd hh:mm").parse(strDate + " " + hour);
         Borrow borrow = new Borrow(date, userId, stuffId, libraryId);
         System.out.println(center.borrow(borrow,pass));
+    }
+
+    public void returning(String userId, String pass, String libraryId, String stuffId, String strDate, String hour) throws ParseException {
+        Date date = new SimpleDateFormat("yyyy-MM-dd hh:mm").parse(strDate + " " + hour);
+        System.out.println(center.returning());
     }
 }
