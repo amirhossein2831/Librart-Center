@@ -144,6 +144,7 @@ public class TestParser {
 
     public void returning(String userId, String pass, String libraryId, String stuffId, String strDate, String hour) throws ParseException {
         Date date = new SimpleDateFormat("yyyy-MM-dd hh:mm").parse(strDate + " " + hour);
-        System.out.println(center.returning());
+        Borrow borrow = new Borrow(date, userId, stuffId, libraryId);
+        System.out.println(center.returning(borrow,pass));
     }
 }
