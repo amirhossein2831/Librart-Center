@@ -7,6 +7,7 @@ public class Staff {
     private String year;
     private String address;
 
+
     public Staff(String id, String pass, String firstName, String lastName, String nationalId, String year, String address) {
         this.id = id;
         this.pass = pass;
