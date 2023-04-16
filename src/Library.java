@@ -257,6 +257,26 @@ public class Library {
         }
         return new Point(bookNum, thesisNum);
     }
+
+    public String libraryReport() {
+        int allBookNum = 0;
+        int allThesisNum = theses.size();
+        int borrowedBoolNum = 0;
+        int borrowedThesisNum = 0;
+        for (Book book : books.values()) {
+            allBookNum += book.getNumBook();
+        }
+        for (ArrayList<Borrow> borrows1 : new ArrayList<>(borrows.values())) {
+            for (Borrow borrow : borrows1) {
+                if (borrow.isBook()) {
+                    borrowedBoolNum++;
+                }
+                else
+                    borrowedThesisNum++;
+            }
+        }
+        return allBookNum + " " + allThesisNum + " " + borrowedBoolNum + " " + borrowedThesisNum;
+    }
 }
 
 
