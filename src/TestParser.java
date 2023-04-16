@@ -78,6 +78,9 @@ public class TestParser {
             case "report-penalties-sum":
                 reportPenalties();
                 break;
+            case "library-report":
+                libraryReport(args[0]);
+                break;
             case "category-report":
                 categoryReport(args[0]);
                 break;
@@ -174,5 +177,9 @@ public class TestParser {
 
     public void categoryReport(String categoryId) {
         System.out.println(center.categoryReport(categoryId));
+    }
+
+    public void libraryReport(String libraryId) {
+        System.out.println(center.libraryReport(libraryId));
     }
 }
