@@ -6,6 +6,7 @@ public class Student {
     private String nationalId;
     private String year;
     private String address;
+    private int debt;
 
     public Student(String id, String pass, String firstName, String lastName, String nationalId, String year, String address) {
         this.id = id;
@@ -15,6 +16,7 @@ public class Student {
         this.nationalId = nationalId;
         this.year = year;
         this.address = address;
+        debt = 0;
     }
 
     public String getId() {
@@ -44,6 +46,9 @@ public class Student {
     public String getAddress() {
         return address;
     }
+    public int getDebt() {
+        return debt;
+    }
 
     public void setPass(String pass) {
         this.pass = pass;
@@ -67,6 +72,10 @@ public class Student {
 
     public void setAddress(String address) {
         this.address = address;
+    }
+
+    public void setDebt(int debt) {
+        this.debt = debt;
     }
 
     public void edit(Student student) {
