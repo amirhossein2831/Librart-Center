@@ -1,4 +1,5 @@
 import java.util.HashMap;
+import java.util.HashSet;
 
 public class Center {
     private HashMap<String, Library> libraries;
@@ -176,4 +177,35 @@ public class Center {
         return "success";
     }
 
+    public String borrow(Borrow borrow,String pass) {
+        if (borrow.evaluateIsStudent(new HashSet<>(students.keySet()), new HashSet<>(staffs.keySet()))) {
+            return "not-found";
+        }
+        if (borrow.isStudent()) {
+            Student student = students.get(borrow.getUserId());
+            if (!student.getPass().equals(pass)) {
+                return "invalid-pass";
+            }
+        } else {
+            Staff staff = staffs.get(borrow.getUserId());
+            if (!staff.getPass().equals(pass)) {
+                return "invalid-pass";
+            }
+        }
+        Library library = libraries.get(borrow.getLibraryId());
+        if (library == null) {
+            return "not-found";
+        }
+        if (borrow.evaluateIsBook(library.getBookIds(), library.getThesisIds())) {
+            return "not-found";
+        }
+        if (!library.borrow(borrow)) {
+
+            return "not-allowed";
+        }
+        return "success";
+    }
+    public Library getLibrary(String libraryId) {
+        return libraries.get(libraryId);
+    }
 }
