@@ -275,5 +275,17 @@ public class Center {
         staffs.get(borrow.getUserId()).setDebt(debt);
         return ""+debt;
     }
+
+    public String reportPenalties() {
+        int Penalties = 0;
+        for (Staff staff : staffs.values()) {
+            Penalties += staff.getDebt();
+        }
+        for (Student student : students.values()) {
+            Penalties += student.getDebt();
+        }
+        return "" + Penalties;
+
+    }
 }
 
