@@ -1,17 +1,17 @@
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 
 public class Library {
-    private String id;
-    private String name;
-    private String year;
-    private int numSeat;
-    private String address;
-    private HashMap<String, Book> books;
-    private HashMap<String, Thesis> theses;
-    private HashMap<String, ArrayList<Borrow>> borrows;
+    private final String id;
+    private final String name;
+    private final String year;
+    private final int numSeat;
+    private final String address;
+    private final HashMap<String, Book> books;
+    private final HashMap<String, Thesis> theses;
+    private final HashMap<String, ArrayList<Borrow>> borrows;
+
     public Library(String id, String name, String year, int numSeat, String address) {
         this.id = id;
         this.name = name;
@@ -54,6 +54,7 @@ public class Library {
     public Thesis getThesis(String thesisId) {
         return theses.get(thesisId);
     }
+
     public void addThesis(Thesis thesis) {
         this.theses.put(thesis.getId(), thesis);
     }
@@ -74,21 +75,20 @@ public class Library {
         return new HashSet<>(theses.keySet());
     }
 
+
     public boolean borrow(Borrow borrow) {
-        ArrayList<Borrow> borrows1 = new ArrayList<>();
         if (borrow.isStudent()) {
             if (countBorrows(borrow.getUserId()) < 3) {
-                borrows1.add(borrow);
-                borrows.put(borrow.getStuffId(),borrows1);
-                return true;
+                if (isAllowed(borrow)) {
+                    return true;
+                }
             }
-            return false;
         }
-        if (countBorrows(borrow.getUserId()) < 5) {
-            borrows1.add(borrow);
-            borrows.put(borrow.getStuffId(),borrows1);
-            return true;
-        }
+            if (countBorrows((borrow.getUserId())) < 5) {
+                if (isAllowed(borrow)) {
+                    return true;
+                }
+            }
         return false;
     }
 
@@ -104,5 +104,45 @@ public class Library {
         return count;
     }
 
+    public int countStuffs(String stuffId) {
+        ArrayList<Borrow> myBorrow = borrows.get(stuffId);
+        if(myBorrow == null){
+            return 0;
+        }
+        return myBorrow.size();
+    }
 
+    public boolean isAllowed(Borrow borrow) {
+        ArrayList<Borrow> borrows1 = borrows.get(borrow.getStuffId());
+        if (borrows1 == null) {
+            borrows1 = new ArrayList<>();
+        }
+        if (borrow.isBook()) {
+            if (countStuffs(borrow.getStuffId()) < books.get(borrow.getStuffId()).getNumBook()) {
+                borrows1.add(borrow);
+                borrows.put(borrow.getStuffId(), borrows1);
+                return true;
+            }
+            return false;
+        }
+        if (countStuffs(borrow.getStuffId()) == 0) {
+            borrows1.add(borrow);
+            borrows.put(borrow.getStuffId(), borrows1);
+            return true;
+        }
+        return false;
+    }
+    public boolean checkUserBorrows(String userId) {
+        for (ArrayList<Borrow> borrows1 : new ArrayList<>(borrows.values())) {
+            for (Borrow borrow : borrows1) {
+                if (borrow.getUserId().equals(userId)) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
 }
+
+
+

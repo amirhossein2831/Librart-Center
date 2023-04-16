@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 
@@ -105,6 +106,9 @@ public class Center {
         if (library == null) {
             return "not-found";
         }
+        if (library.countStuffs(bookId) != 0) {
+            return "not-allowed";
+        }
         if (library.getBook(bookId) == null) {
             return "not-found";
         }
@@ -117,6 +121,9 @@ public class Center {
         Library library = libraries.get(libraryId);
         if (library == null) {
             return "not-found";
+        }
+        if (library.countStuffs(thesisId) != 0) {
+            return "not-allowed";
         }
         if (library.getThesis(thesisId) == null) {
             return "not-found";
@@ -147,6 +154,11 @@ public class Center {
         if (students.get(id) == null) {
             return "not-found";
         }
+        for (Library library : new ArrayList<>(libraries.values())) {
+            if (library.checkUserBorrows(id)) {
+                return "not-allowed";
+            }
+        }
         students.remove(id);
         return "success";
     }
@@ -173,12 +185,18 @@ public class Center {
         if (staffs.get(id) == null) {
             return "not-found";
         }
+        for (Library library : new ArrayList<>(libraries.values())) {
+            if (library.checkUserBorrows(id)) {
+                return "not-allowed";
+            }
+        }
         staffs.remove(id);
         return "success";
     }
 
     public String borrow(Borrow borrow,String pass) {
-        if (borrow.evaluateIsStudent(new HashSet<>(students.keySet()), new HashSet<>(staffs.keySet()))) {
+        if (!borrow.evaluateIsStudent(new HashSet<>(students.keySet()), new HashSet<>(staffs.keySet()))) {
+            System.out.println("1");
             return "not-found";
         }
         if (borrow.isStudent()) {
@@ -194,13 +212,16 @@ public class Center {
         }
         Library library = libraries.get(borrow.getLibraryId());
         if (library == null) {
+            System.out.println("2");
+
             return "not-found";
         }
-        if (borrow.evaluateIsBook(library.getBookIds(), library.getThesisIds())) {
+        if (!borrow.evaluateIsBook(library.getBookIds(), library.getThesisIds())) {
+            System.out.println("3");
+
             return "not-found";
         }
         if (!library.borrow(borrow)) {
-
             return "not-allowed";
         }
         return "success";
