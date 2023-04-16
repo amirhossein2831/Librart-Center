@@ -1,3 +1,4 @@
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -347,6 +348,21 @@ public class Center {
         }
         searchID.deleteCharAt(searchID.length() - 1);
         return searchID;
+    }
+
+    public String categoryReport(String categoryId) {
+        Point hold;
+        Point output = new Point();
+
+        if (categories.get(categoryId) == null) {
+            return "not-found";
+        }
+        for (Library library : libraries.values()) {
+            hold = library.categoryReport(categoryId);
+            output.x += hold.x;
+            output.y += hold.y;
+        }
+        return output.x + " " + output.y;
     }
 
 
