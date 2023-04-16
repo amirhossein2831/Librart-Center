@@ -68,6 +68,9 @@ public class TestParser {
             case "return":
                 returning(args[0], args[1], args[2], args[3], args[4], args[5]);
                 break;
+            case "report-penalties-sum":
+                reportPenalties();
+                break;
         }
     }
     public void addLibrary(String id, String name, String year, int numSeat, String address) {
@@ -146,5 +149,9 @@ public class TestParser {
         Date date = new SimpleDateFormat("yyyy-MM-dd hh:mm").parse(strDate + " " + hour);
         Borrow borrow = new Borrow(date, userId, stuffId, libraryId);
         System.out.println(center.returning(borrow,pass));
+    }
+
+    public void reportPenalties() {
+        System.out.println(center.reportPenalties());
     }
 }
