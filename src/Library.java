@@ -75,19 +75,21 @@ public class Library {
     }
 
 
-    public boolean borrow(Borrow borrow) {
+    public boolean borrow(Borrow borrow,int userBorrow) {
         if (borrow.isStudent()) {
-            if (countBorrows(borrow.getUserId()) < 3) {
+            if (userBorrow < 3) {
                 if (isAllowed(borrow)) {
                     return true;
                 }
             }
         }
-            if (countBorrows((borrow.getUserId())) < 5) {
+        else {
+            if (userBorrow < 5) {
                 if (isAllowed(borrow)) {
                     return true;
                 }
             }
+        }
         return false;
     }
 
@@ -115,6 +117,7 @@ public class Library {
         ArrayList<Borrow> borrows1 = borrows.get(borrow.getStuffId());
         if (borrows1 == null) {
             borrows1 = new ArrayList<>();
+
         }
         if (borrow.isBook()) {
             if (countStuffs(borrow.getStuffId()) < books.get(borrow.getStuffId()).getNumBook()) {
@@ -149,15 +152,18 @@ public class Library {
     public Borrow checkUserBorrows(String userId,String stuffId) {
         Borrow borr = null;
         ArrayList<Borrow> hold = borrows.get(stuffId);
-            for (Borrow borrow : hold) {
-                if (borrow.getUserId().equals(userId)) {
-                    if (borr == null) {
-                        borr = borrow;
-                    } else if (borr.getDate().getTime() < borrow.getDate().getTime()) {
-                        borr = borrow;
-                    }
+        if (hold == null) {
+            return null;
+        }
+        for (Borrow borrow : hold) {
+            if (borrow.getUserId().equals(userId)) {
+                if (borr == null) {
+                    borr = borrow;
+                } else if (borr.getDate().getTime() < borrow.getDate().getTime()) {
+                    borr = borrow;
                 }
             }
+        }
         return borr;
     }
 
@@ -191,26 +197,13 @@ public class Library {
 
     public int returning(Borrow borrow, Date returnTime) {
         ArrayList<Borrow> borrows1 = borrows.get(borrow.getStuffId());
-        if (checkDebt(borrow, returnTime) == 0) {
-            for (int i = 0; i < borrows1.size(); i++) {
-                if (borrows1.get(i).getDate().equals(borrow.getDate())  ) {
-                    borrows1.remove(i);
-                    return 0;
-                }
-            }
-        }
-        for (int i = 0; i < borrows1.size(); i++) {
-            if (borrows1.get(i).getDate().equals(borrow.getDate())) {
-                borrows1.remove(i);
-                return checkDebt(borrow, returnTime);
-            }
-        }
-        return 0;
+        int debt = checkDebt(borrow, returnTime);
+        borrows1.remove(borrow);
+        return debt;
     }
 
-    public StringBuilder  search(String key) {
+    public HashSet<String>search(String key) {
         HashSet<String > output = new HashSet<>();
-        StringBuilder searchID = new StringBuilder();
         for (Book book : books.values()) {
             if (book.getName().toLowerCase().contains(key.toLowerCase())) {
                 output.add(book.getId());
@@ -233,13 +226,7 @@ public class Library {
                 output.add(thesis.getId());
             }
         }
-        ArrayList<String> outputArray = new ArrayList<>(output);
-        Collections.sort(outputArray);
-        for (String i : outputArray) {
-            searchID.append(i);
-            searchID.append("|");
-        }
-        return searchID;
+        return output;
     }
 
     public Point categoryReport(String categoryId) {
@@ -247,7 +234,7 @@ public class Library {
         int thesisNum = 0;
         for (Book book : books.values()) {
             if (book.getCategoryId().equals(categoryId)) {
-                bookNum++;
+                bookNum+=book.getNumBook();
             }
         }
         for (Thesis thesis : theses.values()) {
@@ -276,6 +263,25 @@ public class Library {
             }
         }
         return allBookNum + " " + allThesisNum + " " + borrowedBoolNum + " " + borrowedThesisNum;
+    }
+
+    public StringBuilder reportPassedDeadline(Date date) {
+        HashSet<String> outPut = new HashSet<>();
+        StringBuilder hold = new StringBuilder();
+        for (ArrayList<Borrow> borrows1 : new ArrayList<>(borrows.values())) {
+            for (Borrow borrow : borrows1) {
+                if (checkDebt(borrow, date) != 0) {
+                    outPut.add(borrow.getStuffId());
+                }
+            }
+        }
+        ArrayList<String> outputArray = new ArrayList<>(outPut);
+        Collections.sort(outputArray);
+        for (String i : outputArray) {
+            hold.append(i);
+            hold.append("|");
+        }
+        return hold;
     }
 }
 
