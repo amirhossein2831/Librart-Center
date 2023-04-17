@@ -1,8 +1,5 @@
 import java.awt.*;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.HashSet;
+import java.util.*;
 
 public class Center {
     private final HashMap<String, Library> libraries;
@@ -233,10 +230,18 @@ public class Center {
         if (!borrow.evaluateIsBook(library.getBookIds(), library.getThesisIds())) {
             return "not-found";
         }
-        if (!library.borrow(borrow)) {
+        if (!library.borrow(borrow,countBorrow(borrow.getUserId()))) {
             return "not-allowed";
         }
         return "success";
+    }
+
+    public int countBorrow(String userId) {
+        int x = 0;
+        for (Library library : libraries.values()) {
+            x += library.countBorrows(userId);
+        }
+        return x;
     }
 
     public String returning(Borrow borrow, String pass) {
@@ -290,15 +295,22 @@ public class Center {
     }
 
     public StringBuilder search(String key) {
-        StringBuilder output = new StringBuilder();
+        HashSet<String> output = new HashSet<>();
+        StringBuilder stringBuilder = new StringBuilder();
         for (Library library : libraries.values()) {
-            output.append(library.search(key));
+            output.addAll(library.search(key));
         }
-        if (output.length() == 0) {
-            return output.append("not-found");
+        ArrayList<String> hold = new ArrayList<>(output);
+        Collections.sort(hold);
+        for (String str : hold) {
+            stringBuilder.append(str);
+            stringBuilder.append("|");
         }
-        output.deleteCharAt(output.length() - 1);
-        return output;
+        if (stringBuilder.length() == 0) {
+            return stringBuilder.append("not-found");
+        }
+        stringBuilder.deleteCharAt(stringBuilder.length() - 1);
+        return stringBuilder;
     }
 
     public StringBuilder searchUser(String userId, String pass, String key) {
@@ -372,7 +384,18 @@ public class Center {
         }
         return library.libraryReport();
     }
-
-
+    public StringBuilder reportPasseDeadline(String libraryId, Date date) {
+        StringBuilder output;
+        Library library = libraries.get(libraryId);
+        if (library == null) {
+            return new StringBuilder("not-found");
+        }
+        output = library.reportPassedDeadline(date);
+        if (output.length() == 0) {
+            return new StringBuilder("none");
+        }
+        output.deleteCharAt(output.length() - 1);
+        return output;
+    }
 }
 
