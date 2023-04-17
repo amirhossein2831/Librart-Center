@@ -76,7 +76,7 @@ public class Staff {
     }
 
     public void setDebt(int debt) {
-        this.debt = debt;
+        this.debt += debt;
     }
 
     public void edit(Staff staff) {
