@@ -75,7 +75,7 @@ public class Student {
     }
 
     public void setDebt(int debt) {
-        this.debt = debt;
+        this.debt += debt;
     }
 
     public void edit(Student student) {
