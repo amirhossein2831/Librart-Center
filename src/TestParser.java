@@ -84,6 +84,9 @@ public class TestParser {
             case "category-report":
                 categoryReport(args[0]);
                 break;
+            case "report-passed-deadline":
+                reportPasseDeadline(args[0], args[1], args[2]);
+                break;
         }
     }
     public void addLibrary(String id, String name, String year, int numSeat, String address) {
@@ -181,5 +184,10 @@ public class TestParser {
 
     public void libraryReport(String libraryId) {
         System.out.println(center.libraryReport(libraryId));
+    }
+
+    public void reportPasseDeadline(String libraryId, String strDate, String hour) throws ParseException {
+        Date date = new SimpleDateFormat("yyyy-MM-dd hh:mm").parse(strDate + " " + hour);
+        System.out.println(center.reportPasseDeadline(libraryId, date));
     }
 }
